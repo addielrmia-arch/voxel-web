@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Voxel — Estudio de marketing, tecnología y producción en Tampico. Marcas que crecen en LATAM." />
+<title>Voxel — Marketing, Tech & Producción</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0E0C1A;
+    --violet: #6C5CE7;
+    --pink: #FF2D7E;
+    --acid: #E8FF5C;
+    --fog: #F2F0FF;
+    --olivo: #4A8C6A;
+    --white: #FFFFFF;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--ink);
+    color: var(--white);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  .serif { font-family: 'DM Serif Display', Georgia, serif; font-style: italic; font-weight: 400; }
+
+  /* ====== NAV ====== */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 50;
+    padding: 20px 32px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(14,12,26,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .logo {
+    font-weight: 800; font-size: 22px; letter-spacing: -0.5px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .logo-dot {
+    width: 10px; height: 10px; background: var(--violet);
+    border-radius: 2px; transform: rotate(45deg);
+  }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a {
+    color: var(--white); text-decoration: none; font-size: 14px; font-weight: 500;
+    opacity: 0.7; transition: opacity 0.2s;
+  }
+  .nav-links a:hover { opacity: 1; }
+  .nav-cta {
+    background: var(--acid); color: var(--ink) !important;
+    padding: 10px 18px; border-radius: 999px;
+    font-weight: 600 !important; opacity: 1 !important;
+    transition: transform 0.2s;
+  }
+  .nav-cta:hover { transform: translateY(-2px); }
+  @media (max-width: 720px) {
+    .nav-links a:not(.nav-cta) { display: none; }
+    nav { padding: 16px 20px; }
+  }
+
+  /* ====== HERO ====== */
+  .hero {
+    min-height: 100vh;
+    padding: 140px 32px 80px;
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 13px; font-weight: 500; letter-spacing: 1.5px;
+    text-transform: uppercase; opacity: 0.7;
+    margin-bottom: 32px;
+  }
+  .hero-eyebrow::before {
+    content: ''; width: 32px; height: 1px; background: var(--violet);
+  }
+  .hero h1 {
+    font-size: clamp(48px, 9vw, 132px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+    max-width: 1200px;
+    margin-bottom: 48px;
+  }
+  .pill {
+    display: inline-block; padding: 0 0.3em;
+    border-radius: 12px;
+    line-height: 1.05;
+    transform: rotate(-1.5deg);
+    margin: 0 0.05em;
+  }
+  .pill-violet { background: var(--violet); color: var(--white); }
+  .pill-pink { background: var(--pink); color: var(--white); transform: rotate(1.5deg); }
+  .pill-acid { background: var(--acid); color: var(--ink); }
+  .hero-sub {
+    max-width: 620px; font-size: clamp(16px, 1.6vw, 20px);
+    opacity: 0.75; margin-bottom: 48px; line-height: 1.55;
+  }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 28px; border-radius: 999px;
+    font-weight: 600; font-size: 15px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none; cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--violet); color: var(--white);
+    box-shadow: 0 10px 30px rgba(108,92,231,0.4);
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(108,92,231,0.55); }
+  .btn-ghost {
+    background: transparent; color: var(--white);
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .btn-ghost:hover { border-color: var(--white); }
+  .hero-meta {
+    position: absolute; bottom: 40px; right: 32px;
+    text-align: right; font-size: 12px; letter-spacing: 1px;
+    text-transform: uppercase; opacity: 0.5;
+  }
+  .hero-meta strong { display: block; color: var(--acid); margin-top: 4px; opacity: 1; font-size: 13px; }
+  @media (max-width: 720px) {
+    .hero-meta { display: none; }
+    .hero { padding: 120px 20px 60px; }
+  }
+  /* Floating shape behind hero */
+  .blob {
+    position: absolute; top: 20%; right: -10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(108,92,231,0.35), transparent 70%);
+    filter: blur(40px);
+    z-index: -1;
+    animation: float 12s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translate(0,0); }
+    50% { transform: translate(-40px, 30px); }
+  }
+
+  /* ====== MARQUEE ====== */
+  .marquee {
+    background: var(--violet);
+    color: var(--white);
+    padding: 28px 0;
+    overflow: hidden;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .marquee-track {
+    display: flex; gap: 60px;
+    animation: scroll 30s linear infinite;
+    width: max-content;
+  }
+  .marquee-item {
+    font-family: 'DM Serif Display', serif; font-style: italic;
+    font-size: clamp(36px, 5vw, 64px);
+    white-space: nowrap;
+    display: flex; align-items: center; gap: 60px;
+  }
+  .marquee-item::after {
+    content: '✺';
+    font-family: 'Outfit', sans-serif; font-style: normal;
+    color: var(--acid);
+    font-size: 0.6em;
+  }
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ====== SERVICES ====== */
+  .services {
+    background: var(--fog);
+    color: var(--ink);
+    padding: 120px 32px;
+  }
+  .container { max-width: 1280px; margin: 0 auto; }
+  .section-eyebrow {
+    font-size: 13px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--violet);
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-eyebrow::before {
+    content: ''; width: 32px; height: 1px; background: var(--violet);
+  }
+  .section-title {
+    font-size: clamp(36px, 5.5vw, 72px);
+    line-height: 1; letter-spacing: -0.02em;
+    font-weight: 700; max-width: 900px;
+    margin-bottom: 60px;
+  }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2px; background: var(--ink);
+    border: 1px solid var(--ink); border-radius: 24px;
+    overflow: hidden;
+  }
+  .service-card {
+    background: var(--fog);
+    padding: 40px 32px;
+    transition: background 0.3s, color 0.3s;
+    cursor: pointer;
+    min-height: 280px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .service-card:hover { background: var(--violet); color: var(--white); }
+  .service-card:hover .service-num { color: var(--acid); }
+  .service-num {
+    font-family: 'DM Serif Display', serif; font-style: italic;
+    font-size: 24px; color: var(--violet);
+    margin-bottom: 24px;
+    transition: color 0.3s;
+  }
+  .service-card h3 {
+    font-size: 26px; font-weight: 700; letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+  .service-card p { font-size: 15px; opacity: 0.8; line-height: 1.55; }
+
+  /* ====== STATS ====== */
+  .stats {
+    background: var(--pink);
+    color: var(--ink);
+    padding: 120px 32px;
+    position: relative;
+  }
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 60px 40px; margin-top: 60px;
+  }
+  .stat-num {
+    font-family: 'DM Serif Display', serif; font-style: italic;
+    font-size: clamp(64px, 10vw, 140px);
+    line-height: 1; letter-spacing: -0.04em;
+    margin-bottom: 8px;
+  }
+  .stat-label {
+    font-size: 14px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 1px;
+    max-width: 220px;
+  }
+  .stats .section-title { color: var(--ink); }
+  .stats .section-eyebrow { color: var(--ink); }
+  .stats .section-eyebrow::before { background: var(--ink); }
+
+  /* ====== WORK ====== */
+  .work {
+    background: var(--ink);
+    padding: 120px 32px;
+  }
+  .work .section-eyebrow { color: var(--acid); }
+  .work .section-eyebrow::before { background: var(--acid); }
+  .work-grid {
+    display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px;
+  }
+  .work-card {
+    border-radius: 24px; padding: 40px;
+    min-height: 320px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    transition: transform 0.3s;
+    cursor: pointer;
+  }
+  .work-card:hover { transform: translateY(-6px); }
+  .work-card:nth-child(1) { grid-column: span 7; background: var(--violet); }
+  .work-card:nth-child(2) { grid-column: span 5; background: var(--acid); color: var(--ink); }
+  .work-card:nth-child(3) { grid-column: span 5; background: var(--olivo); }
+  .work-card:nth-child(4) { grid-column: span 7; background: var(--fog); color: var(--ink); }
+  @media (max-width: 720px) {
+    .work-card:nth-child(n) { grid-column: span 12; }
+  }
+  .work-tag {
+    font-size: 12px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 1.5px;
+    opacity: 0.7;
+  }
+  .work-title {
+    font-size: clamp(28px, 3.5vw, 44px);
+    line-height: 1.05; letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+  .work-result {
+    font-family: 'DM Serif Display', serif; font-style: italic;
+    font-size: 18px; opacity: 0.85;
+  }
+
+  /* ====== CTA ====== */
+  .cta {
+    background: var(--acid);
+    color: var(--ink);
+    padding: 140px 32px;
+    text-align: center;
+  }
+  .cta h2 {
+    font-size: clamp(48px, 8vw, 120px);
+    line-height: 0.95; letter-spacing: -0.03em;
+    font-weight: 700;
+    margin-bottom: 32px;
+    max-width: 1100px; margin-left: auto; margin-right: auto;
+  }
+  .cta-sub {
+    font-size: clamp(16px, 1.5vw, 20px);
+    max-width: 540px; margin: 0 auto 48px;
+    opacity: 0.8;
+  }
+  .cta .btn-primary { background: var(--ink); color: var(--white); }
+
+  /* ====== FOOTER ====== */
+  footer {
+    background: var(--ink);
+    color: var(--white);
+    padding: 60px 32px 32px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px; max-width: 1280px; margin: 0 auto 48px;
+  }
+  @media (max-width: 720px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .footer-brand p { font-size: 14px; opacity: 0.6; max-width: 280px; margin-top: 12px; }
+  .footer-col h4 {
+    font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px;
+    color: var(--violet); margin-bottom: 16px;
+  }
+  .footer-col a {
+    display: block; color: var(--white); text-decoration: none;
+    font-size: 14px; opacity: 0.7; padding: 4px 0;
+    transition: opacity 0.2s;
+  }
+  .footer-col a:hover { opacity: 1; }
+  .footer-bottom {
+    max-width: 1280px; margin: 0 auto;
+    display: flex; justify-content: space-between;
+    padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 13px; opacity: 0.5;
+    flex-wrap: wrap; gap: 12px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <span class="logo-dot"></span>
+    Voxel
+  </div>
+  <div class="nav-links">
+    <a href="#servicios">Servicios</a>
+    <a href="#trabajo">Trabajo</a>
+    <a href="#contacto">Contacto</a>
+    <a href="#contacto" class="nav-cta">Cotizar →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="blob"></div>
+  <div class="hero-eyebrow">Estudio de marketing, tech & producción · Tampico, MX</div>
+  <h1>
+    Construimos <span class="serif pill pill-violet">marcas</span> que crecen
+    <span class="serif pill pill-acid">en serio</span>
+    en LATAM con<br>
+    estrategia, <span class="serif pill pill-pink">tecnología</span> y narrativa.
+  </h1>
+  <p class="hero-sub">
+    Doce años haciendo Meta Ads que sí venden, sitios que sí cargan, marcas que sí se ven distintas. Real estate, hospitality, restaurantes y B2B desde Tampico para toda LATAM.
+  </p>
+  <div class="hero-actions">
+    <a href="#contacto" class="btn btn-primary">Agendar diagnóstico →</a>
+    <a href="#trabajo" class="btn btn-ghost">Ver trabajo</a>
+  </div>
+  <div class="hero-meta">
+    Estudio activo desde<br>
+    <strong>2013</strong>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span class="marquee-item">Meta Ads</span>
+    <span class="marquee-item">Branding</span>
+    <span class="marquee-item">Web & App</span>
+    <span class="marquee-item">Producción</span>
+    <span class="marquee-item">CRM Automation</span>
+    <span class="marquee-item">SEO/SEM</span>
+    <span class="marquee-item">Meta Ads</span>
+    <span class="marquee-item">Branding</span>
+    <span class="marquee-item">Web & App</span>
+    <span class="marquee-item">Producción</span>
+    <span class="marquee-item">CRM Automation</span>
+    <span class="marquee-item">SEO/SEM</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="servicios">
+  <div class="container">
+    <div class="section-eyebrow">Qué hacemos</div>
+    <h2 class="section-title">Un estudio. Seis disciplinas. <span class="serif">Una sola conversación.</span></h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div>
+          <h3>Meta Ads</h3>
+          <p>Campañas de performance certificadas Meta Blueprint. Conversiones, tracking CAPI y optimización quincenal.</p>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div>
+          <h3>Branding</h3>
+          <p>Identidad visual, naming y manuales para marcas que necesitan diferenciarse de su competencia local.</p>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div>
+          <h3>Web & App</h3>
+          <p>Sitios rápidos, landings que convierten, apps a medida. Stack moderno, performance medible.</p>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <div>
+          <h3>Producción</h3>
+          <p>Foto y video con dirección creativa. Desde reels para Instagram hasta piezas para campañas de marca.</p>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">05</div>
+        <div>
+          <h3>CRM & Automatización</h3>
+          <p>Kommo, n8n, WhatsApp Business API. Pipelines que no se rompen y leads que sí responden.</p>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">06</div>
+        <div>
+          <h3>Loyalty Boomerang</h3>
+          <p>Plataforma propia de lealtad y rewards multinegocio. Membresías, NFC y métricas en tiempo real.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="container">
+    <div class="section-eyebrow">Los números</div>
+    <h2 class="section-title">No hablamos de "engagement". Hablamos de <span class="serif">resultados.</span></h2>
+    <div class="stats-grid">
+      <div>
+        <div class="stat-num">12+</div>
+        <div class="stat-label">años operando en LATAM</div>
+      </div>
+      <div>
+        <div class="stat-num">80M</div>
+        <div class="stat-label">MXN gestionados en Meta Ads</div>
+      </div>
+      <div>
+        <div class="stat-num">140</div>
+        <div class="stat-label">marcas activadas desde 2013</div>
+      </div>
+      <div>
+        <div class="stat-num">5</div>
+        <div class="stat-label">países donde hemos lanzado campañas</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section class="work" id="trabajo">
+  <div class="container">
+    <div class="section-eyebrow">Trabajo seleccionado</div>
+    <h2 class="section-title">Casos que <span class="serif">vale la pena</span> contar.</h2>
+    <div class="work-grid">
+      <div class="work-card">
+        <div>
+          <div class="work-tag">Hospitality · Veracruz</div>
+          <h3 class="work-title">Casa Laguna Coatzacoalcos</h3>
+        </div>
+        <div class="work-result">Daypass, eventos y buffet — campaña always-on con CAPI vía WhatsApp.</div>
+      </div>
+      <div class="work-card">
+        <div>
+          <div class="work-tag">Real Estate</div>
+          <h3 class="work-title">Playa Hermosa</h3>
+        </div>
+        <div class="work-result">Reels, dirección creativa y Meta Ads para preventa de desarrollo en costa.</div>
+      </div>
+      <div class="work-card">
+        <div>
+          <div class="work-tag">Educación</div>
+          <h3 class="work-title">Colegio Comenius</h3>
+        </div>
+        <div class="work-result">Campaña de captación para nuevo ciclo escolar en Tampico.</div>
+      </div>
+      <div class="work-card">
+        <div>
+          <div class="work-tag">Hotelería · Multi-marca</div>
+          <h3 class="work-title">Diagnósticos de presencia digital</h3>
+        </div>
+        <div class="work-result">Auditorías, propuestas y roadmaps para una red de hoteles en México.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="contacto">
+  <div class="container">
+    <h2>¿Listo para <span class="serif">mover</span> el negocio?</h2>
+    <p class="cta-sub">Diagnóstico gratuito de 30 minutos. Te decimos qué arreglar primero — aunque no trabajemos juntos.</p>
+    <a href="mailto:hola@voxel.mx" class="btn btn-primary">Escríbenos a hola@voxel.mx →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">
+        <span class="logo-dot"></span>
+        Voxel
+      </div>
+      <p>Marketing, tecnología y producción desde Tampico para toda LATAM.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Estudio</h4>
+      <a href="#servicios">Servicios</a>
+      <a href="#trabajo">Trabajo</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <a href="mailto:hola@voxel.mx">hola@voxel.mx</a>
+      <a href="tel:+528331234567">+52 833 123 4567</a>
+      <a href="#">Tampico, Tamps.</a>
+    </div>
+    <div class="footer-col">
+      <h4>Social</h4>
+      <a href="#">Instagram</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">Behance</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Voxel Agency. Hecho con cuidado en Tampico.</span>
+    <span>v1.0 · Showcase</span>
+  </div>
+</footer>
+
+<script>
+  // Smooth scroll para nav links (extra safety por si el browser ignora scroll-behavior)
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Respeta prefers-reduced-motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.marquee-track, .blob').forEach(el => {
+      el.style.animation = 'none';
+    });
+  }
+</script>
+
+</body>
+</html>
